@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Dzisiejszy Focus & Limity - Windows, iOS, macOS</title>
+  
+  <!-- PWA & Cross-Platform Meta Tags -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#000000">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Focus & Limity">
+  <link rel="apple-touch-icon" href="https://fav.farm/⌛">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Mobile / Desktop Device Frame Container -->
+  <div id="app-frame">
+
+    <!-- Left Navigation Bar (Sidebar on Desktop, Bottom Glass Bar on Mobile) -->
+    <nav class="ios-tab-bar">
+      <div class="desktop-sidebar-logo" style="display:none; padding:10px 14px 20px 14px; font-weight:900; font-size:1.1rem; color:var(--ios-text-primary); border-bottom:1px solid var(--ios-glass-border); margin-bottom:12px;">
+        ⌛ Focus & Limity
+      </div>
+
+      <div class="tab-item active" id="nav-dashboard" onclick="switchTab('dashboard')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+        <span>Pulpit</span>
+      </div>
+
+      <div class="tab-item" id="nav-tasks" onclick="switchTab('tasks')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 11l3 3L22 4"></path>
+          <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
+        </svg>
+        <span>Zadania</span>
+      </div>
+
+      <div class="tab-item" id="nav-limits" onclick="switchTab('limits')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+        <span>Limity</span>
+      </div>
+
+      <div class="tab-item" id="nav-stats" onclick="switchTab('stats')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="20" x2="18" y2="10"></line>
+          <line x1="12" y1="20" x2="12" y2="4"></line>
+          <line x1="6" y1="20" x2="6" y2="14"></line>
+        </svg>
+        <span>Statystyki</span>
+      </div>
+
+      <div class="tab-item" id="nav-settings" onclick="switchTab('settings')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"></path>
+        </svg>
+        <span>Ustawienia</span>
+      </div>
+    </nav>
+
+    <!-- Main Viewport Container -->
+    <div class="main-viewport">
+      
+      <!-- iOS Status Bar & Dynamic Island -->
+      <div class="ios-status-bar">
+        <span class="ios-time" id="status-bar-time">10:09 AM</span>
+        
+        <div class="dynamic-island" id="dynamic-island">
+          <span class="dynamic-island-indicator"></span>
+          <span id="dynamic-island-text">Dzisiejszy Focus</span>
+          <span style="font-size:0.7rem;">⚡</span>
+        </div>
+
+        <div class="ios-icons">
+          <span>📶</span>
+          <span>⚡</span>
+          <span style="font-weight:800;">32%</span>
+        </div>
+      </div>
+
+      <!-- App Header with Dynamic Tab Title & Points Badge Widget -->
+      <header class="app-header">
+        <div class="header-title-group">
+          <h1 id="header-tab-title">Dzisiejszy Focus</h1>
+        </div>
+        <div class="points-widget" onclick="switchTab('stats')">
+          <span class="points-star">★</span>
+          <span class="points-val" id="header-points-val">1000</span>
+          <span style="font-size:0.75rem; font-weight:800;">pkt</span>
+        </div>
+      </header>
+
+      <!-- Main Scrollable Tab Content Container -->
+      <main class="tab-content-container">
+
+        <!-- TAB 0: PULPIT (Dzisiejszy Focus Main View) -->
+        <section id="tab-dashboard" class="tab-pane active">
+          
+          <!-- Screen Time Limits Section -->
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <h2 class="section-head-title">Limity Czasu Ekranu</h2>
+          </div>
+
+          <!-- 2 Side-by-Side Cards Grid of Ring Gauges -->
+          <div class="dashboard-limits-grid" id="dashboard-limits-scroll"></div>
+
+          <!-- Tasks Completed Section -->
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <div>
+              <h2 class="section-head-title">Wykonane Zadania</h2>
+              <div style="font-size:0.75rem; color:var(--ios-text-secondary); font-weight:700; margin-top:2px;" id="dashboard-date-subtitle">16 Sierpnia</div>
+            </div>
+          </div>
+
+          <!-- 2-Column Grid of Task Cards with Point Badges (+1 PKT, +10 PKT, +100 PKT, +1000 PKT) -->
+          <div class="dashboard-tasks-grid" id="dashboard-tasks-grid"></div>
+
+        </section>
+
+        <!-- TAB 1: ZADANIA (TASKS) -->
+        <section id="tab-tasks" class="tab-pane">
+          <!-- Segmented Controls for Frequencies & Points -->
+          <div class="segmented-control">
+            <button id="freq-btn-daily" class="active" onclick="setFrequencyFilter('daily')">
+              <span>Codzienne</span>
+              <span class="pts-pill">1 pkt</span>
+            </button>
+            <button id="freq-btn-weekly" onclick="setFrequencyFilter('weekly')">
+              <span>Tygodniowe</span>
+              <span class="pts-pill">10 pkt</span>
+            </button>
+            <button id="freq-btn-monthly" onclick="setFrequencyFilter('monthly')">
+              <span>Miesięczne</span>
+              <span class="pts-pill">100 pkt</span>
+            </button>
+            <button id="freq-btn-halfYearly" onclick="setFrequencyFilter('halfYearly')">
+              <span>Półroczne</span>
+              <span class="pts-pill">500 pkt</span>
+            </button>
+            <button id="freq-btn-yearly" onclick="setFrequencyFilter('yearly')">
+              <span>Roczne</span>
+              <span class="pts-pill">1000 pkt</span>
+            </button>
+          </div>
+
+          <!-- Task List Items -->
+          <div id="tasks-list-container"></div>
+        </section>
+
+        <!-- TAB 2: LIMITY (LIMITS) -->
+        <section id="tab-limits" class="tab-pane">
+          <div style="font-size:0.85rem; color:var(--ios-text-secondary); margin-bottom:12px; font-weight:600;">
+            Śledź wykorzystany czas w sekundach, minutach lub godzinach. Po osiągnięciu 100% czasu włączy się <strong>głośny alarm dźwiękowy!</strong>
+          </div>
+          <div id="limits-list-container"></div>
+        </section>
+
+        <!-- TAB 3: STATYSTYKI (STATS) -->
+        <section id="tab-stats" class="tab-pane">
+          <!-- 4 Grid Stat Summary Cards -->
+          <div class="stats-grid">
+            <div class="stat-box">
+              <div class="stat-box-icon" style="background:#34C759;">✅</div>
+              <div class="stat-box-val" id="stat-tasks-total">0</div>
+              <div class="stat-box-lbl">Wykonane Zadania</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-box-icon" style="background:#FF3B30;">❌</div>
+              <div class="stat-box-val" id="stat-tasks-uncompleted">0</div>
+              <div class="stat-box-lbl">Niezrobione Zadania</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-box-icon" style="background:#FF9500;">★</div>
+              <div class="stat-box-val" id="stat-points-total">0</div>
+              <div class="stat-box-lbl">Suma Punktów</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-box-icon" style="background:#AF52DE;">⚠️</div>
+              <div class="stat-box-val" id="stat-limits-exceeded">0</div>
+              <div class="stat-box-lbl">Przekroczone Limity</div>
+            </div>
+          </div>
+
+          <!-- Breakdown Card -->
+          <div class="ios-card">
+            <div style="font-weight:800; margin-bottom:12px; font-size:1.05rem; color:var(--ios-text-primary);">
+              Wykonane Zadania wg Punktacji
+            </div>
+            <div id="stats-breakdown-list"></div>
+          </div>
+
+          <!-- Badges Section -->
+          <div class="ios-card" style="margin-top:16px;">
+            <div style="font-weight:800; margin-bottom:4px; font-size:1.05rem; color:var(--ios-text-primary);">
+              Osiągnięcia i Odznaki
+            </div>
+            <div style="font-size:0.75rem; color:var(--ios-text-secondary); margin-bottom:10px; font-weight:600;">
+              Odblokowuj nagrody zdobywając punkty i realizując cele.
+            </div>
+            <div class="badges-container" id="badges-grid"></div>
+          </div>
+        </section>
+
+        <!-- TAB 4: USTAWIENIA (SETTINGS) -->
+        <section id="tab-settings" class="tab-pane">
+
+          <div style="font-weight:800; font-size:0.85rem; color:var(--ios-text-secondary); margin-bottom:6px; padding-left:4px; text-transform:uppercase; letter-spacing:0.04em;">
+            Personalizacja & Wygląd
+          </div>
+          <div class="settings-group">
+            <!-- Layout Switcher Option -->
+            <div class="settings-row">
+              <div class="settings-left">
+                <div class="settings-icon" style="background:#007AFF;">💻</div>
+                <span>Widok Ekranu</span>
+              </div>
+              <select id="setting-layout-select" class="form-select" style="width:200px; padding:6px 10px; font-size:0.85rem;" onchange="changeLayoutView(event)">
+                <option value="mobile" selected>📱 Telefon (iOS Frame)</option>
+                <option value="desktop">🖥️ Pełny Ekran (Desktop)</option>
+              </select>
+            </div>
+
+            <div class="settings-row">
+              <div class="settings-left">
+                <div class="settings-icon" style="background:#5856D6;">🎨</div>
+                <span>Motyw Wyglądu</span>
+              </div>
+              <select id="setting-theme-select" class="form-select" style="width:200px; padding:6px 10px; font-size:0.85rem;" onchange="changeTheme(event)">
+                <option value="auto">⚙️ Automatyczny (System)</option>
+                <option value="dark">🌙 Ciemny</option>
+                <option value="light" selected>☀️ Jasny</option>
+              </select>
+            </div>
+
+            <div class="settings-row">
+              <div class="settings-left">
+                <div class="settings-icon" style="background:#34C759;">🔊</div>
+                <span>Efekty Dźwiękowe & Alarm</span>
+              </div>
+              <label class="ios-switch">
+                <input type="checkbox" id="setting-sound-toggle" onchange="toggleSound(event)">
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Management Section for Deleting Tasks and Limits -->
+          <div style="font-weight:800; font-size:0.85rem; color:var(--ios-text-secondary); margin-bottom:6px; padding-left:4px; text-transform:uppercase; letter-spacing:0.04em;">
+            Usuwanie Zadań & Limitów
+          </div>
+          <div class="settings-group" id="settings-manage-items-list">
+            <!-- Dynamically populated list of items to remove -->
+          </div>
+
+          <div style="font-weight:800; font-size:0.85rem; color:var(--ios-text-secondary); margin-bottom:6px; padding-left:4px; text-transform:uppercase; letter-spacing:0.04em;">
+            Zarządzanie Danymi
+          </div>
+          <div class="settings-group">
+            <div class="settings-row" onclick="resetAllData()" style="cursor:pointer;">
+              <div class="settings-left">
+                <div class="settings-icon" style="background:#FF3B30;">🗑️</div>
+                <span style="color:var(--ios-danger); font-weight:800;">Zresetuj Wszystkie Dane</span>
+              </div>
+              <span style="color:var(--ios-text-tertiary);">➔</span>
+            </div>
+          </div>
+
+          <div style="text-align:center; color:var(--ios-text-tertiary); font-size:0.75rem; margin-top:24px; font-weight:600;">
+            Universal App • Windows • iOS • macOS
+          </div>
+        </section>
+
+      </main>
+
+    </div>
+
+    <!-- Floating Add Button -->
+    <button class="fab-btn" id="fab-add-btn" onclick="openAddModal()">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="5" x2="12" y2="19"></line>
+        <line x1="5" y1="12" x2="19" y2="12"></line>
+      </svg>
+    </button>
+
+    <!-- Modal Sheet Overlay -->
+    <div id="add-modal-overlay" class="modal-overlay">
+      <div class="modal-sheet">
+        <div class="modal-drag-handle"></div>
+
+        <!-- Single Title Header (Shown when inside Zadania or Limity tab) -->
+        <div id="modal-single-title" class="modal-title" style="display:none; margin-bottom:14px; font-weight:900;">Nowe Zadanie</div>
+
+        <!-- 2 Segmented Menu Tabs (Shown ONLY when inside Pulpit tab) -->
+        <div id="modal-segmented-control" class="segmented-control" style="margin-bottom:20px; padding:4px;">
+          <button id="modal-tab-task-btn" class="active" type="button" onclick="setModalTab('task')">
+            <span style="font-size:0.9rem; font-weight:800;">📋 Zadania</span>
+          </button>
+          <button id="modal-tab-limit-btn" type="button" onclick="setModalTab('limit')">
+            <span style="font-size:0.9rem; font-weight:800;">⏱️ Limity</span>
+          </button>
+        </div>
+
+        <form id="add-item-form" onsubmit="handleModalSubmit(event)">
+          
+          <!-- Task Fields -->
+          <div id="modal-task-fields">
+            <div class="form-group">
+              <label class="form-label">Nazwa Zadania</label>
+              <input type="text" id="input-task-title" class="form-input" placeholder="np. Raport z projektu, Trening 30m...">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Okres & Punktacja</label>
+              <select id="select-task-freq" class="form-select">
+                <option value="daily">Codzienne (1 pkt)</option>
+                <option value="weekly">Tygodniowe (10 pkt)</option>
+                <option value="monthly">Miesięczne (100 pkt)</option>
+                <option value="halfYearly">Półroczne (500 pkt)</option>
+                <option value="yearly">Roczne (1000 pkt)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Limit Fields -->
+          <div id="modal-limit-fields" style="display:none;">
+            <div class="form-group">
+              <label class="form-label">Nazwa Limitu</label>
+              <input type="text" id="input-limit-title" class="form-input" placeholder="np. Limit Gier, Czas Ekranu...">
+            </div>
+
+            <div class="form-group" style="display:flex; gap:10px;">
+              <div style="flex:1;">
+                <label class="form-label">Czas Limitu</label>
+                <input type="number" id="input-limit-target-val" class="form-input" placeholder="np. 2" value="2" min="1" max="23" oninput="clampLimitInputValue()">
+              </div>
+              <div style="flex:1;">
+                <label class="form-label">Jednostka Czasu</label>
+                <select id="select-limit-unit" class="form-select" onchange="updateLimitInputMax()">
+                  <option value="hours" selected>Godziny (godz)</option>
+                  <option value="minutes">Minuty (min)</option>
+                  <option value="seconds">Sekundy (sek)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Ikona</label>
+              <select id="select-limit-icon" class="form-select">
+                <option value="🎮">🎮 Limit Gier</option>
+                <option value="⌛">⌛ Czas Ekranu</option>
+                <option value="📱">📱 Ekran / Telefon</option>
+                <option value="📺">📺 Filmy & YouTube</option>
+                <option value="🍔">🍔 Fast Food / Słodycze</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-primary" style="margin-top:10px;">Dodaj Do Listy</button>
+          <button type="button" class="btn-primary" style="background:var(--ios-bg-tertiary); color:var(--ios-text-primary); box-shadow:none; margin-top:8px;" onclick="closeModal()">Anuluj</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
