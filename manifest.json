@@ -1,22 +1,17 @@
 {
-  "name": "Dzisiejszy Focus & Limity",
-  "short_name": "Focus & Limity",
-  "description": "Aplikacja do zarządzania zadaniami i limitami czasu ekranu dla Windows, iOS i macOS",
+  "name": "Focus & Limity",
+  "short_name": "FocusApp",
   "start_url": "./index.html",
   "display": "standalone",
-  "orientation": "portrait-primary",
-  "background_color": "#F2F2F7",
-  "theme_color": "#000000",
+  "background_color": "#070B14",
+  "theme_color": "#070B14",
+  "orientation": "any",
   "icons": [
     {
-      "src": "https://fav.farm/⌛",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "https://fav.farm/⌛",
+      "src": "apple-touch-icon.svg",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
     }
   ]
 }

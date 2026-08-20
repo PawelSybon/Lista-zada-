@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Dark Navy Gradient Background -->
+    <radialGradient id="bgGradient" cx="50%" cy="30%" r="80%">
+      <stop offset="0%" stop-color="#122543"/>
+      <stop offset="50%" stop-color="#091428"/>
+      <stop offset="100%" stop-color="#040914"/>
+    </radialGradient>
+
+    <!-- Glowing White Orb Radial Gradient -->
+    <radialGradient id="orbGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="35%" stop-color="#F0F8FF"/>
+      <stop offset="65%" stop-color="#BAE6FF" stop-opacity="0.85"/>
+      <stop offset="85%" stop-color="#38BDF8" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#0284C7" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Soft Outer Halo -->
+    <radialGradient id="outerHalo" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.5"/>
+      <stop offset="50%" stop-color="#0284C7" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#091428" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- iOS Squircle / Rounded Background -->
+  <rect width="512" height="512" rx="115" ry="115" fill="url(#bgGradient)"/>
+
+  <!-- Outer Halo Glow -->
+  <circle cx="256" cy="256" r="220" fill="url(#outerHalo)"/>
+
+  <!-- Outer Fine Tech Ring -->
+  <circle cx="256" cy="256" r="175" fill="none" stroke="#60A5FA" stroke-width="2.5" stroke-opacity="0.6"/>
+
+  <!-- Middle Concentric Target Ring with Diagonal Crosshair Notch Markers -->
+  <circle cx="256" cy="256" r="150" fill="none" stroke="#93C5FD" stroke-width="3" stroke-opacity="0.85"/>
+
+  <!-- Outer Geometric Crosshair Lines & Diagonal Tech Brackets -->
+  <g stroke="#93C5FD" stroke-width="2.5" stroke-linecap="round" opacity="0.85">
+    <!-- Top Left Diagonal Crosshair Tick -->
+    <line x1="140" y1="140" x2="165" y2="165"/>
+    <polyline points="140,165 140,140 165,140" fill="none"/>
+
+    <!-- Top Right Diagonal Crosshair Tick -->
+    <line x1="372" y1="140" x2="347" y2="165"/>
+    <polyline points="347,140 372,140 372,165" fill="none"/>
+
+    <!-- Bottom Left Diagonal Crosshair Tick -->
+    <line x1="140" y1="372" x2="165" y2="347"/>
+    <polyline points="140,347 140,372 165,372" fill="none"/>
+
+    <!-- Bottom Right Diagonal Crosshair Tick -->
+    <line x1="372" y1="372" x2="347" y2="347"/>
+    <polyline points="347,372 372,372 372,347" fill="none"/>
+
+    <!-- Cardinal Crosshair Notches -->
+    <line x1="256" y1="76" x2="256" y2="92"/>
+    <line x1="256" y1="420" x2="256" y2="436"/>
+    <line x1="76" y1="256" x2="92" y2="256"/>
+    <line x1="420" y1="256" x2="436" y2="256"/>
+  </g>
+
+  <!-- Inner Concentric Ring -->
+  <circle cx="256" cy="256" r="115" fill="none" stroke="#E0F2FE" stroke-width="2" stroke-opacity="0.9"/>
+
+  <!-- Glowing Central White Focus Orb -->
+  <circle cx="256" cy="256" r="95" fill="url(#orbGlow)"/>
+  <circle cx="256" cy="256" r="70" fill="#FFFFFF"/>
+</svg>
